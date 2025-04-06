@@ -55,20 +55,14 @@ static void	handle_pixel(int x, int y, t_fractal *fractal)
 	julia_or_mandelbrot(&z, &c, fractal);
  	while (index < fractal->iterations_value)
     	{
-        	z = sum_complex_nbr(square_complex_nbr(z), c);
-        	if ((z.x * z.x) + (z.y * z.y) > fractal->escape_value)
-      		{
-            		double t = (double)index / fractal->iterations_value;
-            		if (t < 0.33)
-                		color = interpolate_color(t / 0.33, COLOR1, COLOR2);
-            		else if (t < 0.66)
-                		color = interpolate_color((t - 0.33) / 0.33, COLOR2, COLOR3);
-            		else
-                		color = interpolate_color((t - 0.66) / 0.34, COLOR3, COLOR4);
-            		ft_my_pixel_put(x, y, &fractal->image, color);
-            		return;
-        	}
-        	index++;
+		z = sum_complex_nbr(square_complex_nbr(z), c);
+		if ((z.x * z.x) + (z.y * z.y) > fractal->escape_value)
+		{
+			color = lin_inter(index, BLACK, WHITE, 0, fractal->iterations_defintion);
+			ft_my_pixel_put(x, y, &fractal->image, color);
+			return ;
+		}
+		index++;
     	}
 	ft_my_pixel_put(x, y, &fractal->image, COLOR4);
 }
