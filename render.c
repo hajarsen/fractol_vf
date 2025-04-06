@@ -12,11 +12,6 @@
 
 #include "fractol.h"
 
-#define COLOR1 0xFF5733 // Vibrant Red
-#define COLOR2 0x33FF57 // Vibrant Green
-#define COLOR3 0x3357FF // Vibrant Blue
-#define COLOR4 0xFF33A1 // Vibrant Pink
-
 static void	ft_my_pixel_put(int x, int y, t_image *image, int color)
 {
 	int	offset;
