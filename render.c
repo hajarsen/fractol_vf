@@ -12,6 +12,11 @@
 
 #include "fractol.h"
 
+#define COLOR1 0xFF5733 // Vibrant Red
+#define COLOR2 0x33FF57 // Vibrant Green
+#define COLOR3 0x3357FF // Vibrant Blue
+#define COLOR4 0xFF33A1 // Vibrant Pink
+
 static void	ft_my_pixel_put(int x, int y, t_image *image, int color)
 {
 	int	offset;
@@ -34,6 +39,14 @@ static void	julia_or_mandelbrot(t_complex_nbr *z, t_complex_nbr *c, t_fractal *f
 	}
 }
 
+static int interpolate_color(double t, int color1, int color2)
+{
+    int r = (int)((1 - t) * ((color1 >> 16) & 0xFF) + t * ((color2 >> 16) & 0xFF));
+    int g = (int)((1 - t) * ((color1 >> 8) & 0xFF) + t * ((color2 >> 8) & 0xFF));
+    int b = (int)((1 - t) * (color1 & 0xFF) + t * (color2 & 0xFF));
+    return (r << 16) | (g << 8) | b;
+}
+
 static void	handle_pixel(int x, int y, t_fractal *fractal)
 {
   int			index;
@@ -45,18 +58,24 @@ static void	handle_pixel(int x, int y, t_fractal *fractal)
 	z.x = (lin_inter(x, -2, +2, 0, WIDTH) * fractal->zoom) + fractal->shift_x;
 	z.y = (lin_inter(y, +2, -2, 0, HEIGHT) * fractal->zoom) + fractal->shift_y;
 	julia_or_mandelbrot(&z, &c, fractal);
-	while (index < fractal->iterations_value)
-	{
-		z = sum_complex_nbr(square_complex_nbr(z), c);
-		if ((z.x * z.x) + (z.y * z.y) > fractal->escape_value)
-		{
-			color = lin_inter(index, BLACK, WHITE, 0, fractal->iterations_value);
-			ft_my_pixel_put(x, y, &fractal->image, color);
-			return ;
-		}
-		index++;
-	}
-	ft_my_pixel_put(x, y, &fractal->image, PSY_NEON_CORAL);
+ 	while (index < fractal->iterations_value)
+    	{
+        	z = sum_complex_nbr(square_complex_nbr(z), c);
+        	if ((z.x * z.x) + (z.y * z.y) > fractal->escape_value)
+      		{
+            		double t = (double)index / fractal->iterations_value;
+            		if (t < 0.33)
+                		color = interpolate_color(t / 0.33, COLOR1, COLOR2);
+            		else if (t < 0.66)
+                		color = interpolate_color((t - 0.33) / 0.33, COLOR2, COLOR3);
+            		else
+                		color = interpolate_color((t - 0.66) / 0.34, COLOR3, COLOR4);
+            		ft_my_pixel_put(x, y, &fractal->image, color);
+            		return;
+        	}
+        	index++;
+    	}
+	ft_my_pixel_put(x, y, &fractal->image, COLOR4);
 }
 
 void	fractal_render(t_fractal *fractal)
