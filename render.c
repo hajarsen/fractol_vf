@@ -50,7 +50,7 @@ static void	handle_pixel(int x, int y, t_fractal *fractal)
 		z = sum_complex_nbr(square_complex_nbr(z), c);
 		if ((z.x * z.x) + (z.y * z.y) > fractal->escape_value)
 		{
-			color = lin_inter(index, BLACK, WHITE, 0, fractal->iterations_defintion);
+			color = lin_inter(index, BLACK, WHITE, 0, fractal->iterations_value);
 			ft_my_pixel_put(x, y, &fractal->image, WHITE);
 			return ;
 		}
