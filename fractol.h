@@ -21,23 +21,23 @@
 #include <X11/keysym.h>
 #define ERROR_MESSAGE "Please enter : ./fractol mandelbort or ./fractol julia <value 1> <value 2>\n"
 
-#define WIDTH 1200
-#define HEIGHT 1200
+#define WIDTH 800
+#define HEIGHT 800
 
 #define BLACK       0x000000  // Red: 0, Green: 0, Blue: 0
 #define WHITE       0xFFFFFF  // Red: 255, Green: 255, Blue: 255
 
 // Psychedelic colors
-#define COLOR9      0xFF1CAE  ️
-#define COLOR3      0xB57EDC  
+#define PSY_HOT_PINK      0xFF1CAE  ️
+#define PSY_LAVENDER      0xB57EDC  
 #define PSY_ELECTRIC_BLUE 0x00FFFF  
-#define COLOR1   0xFF6EC7  
-#define COLOR2    0x39FF14  
+#define PSY_NEON_CORAL    0xFF6EC7  
+#define PSY_NEON_GREEN    0x39FF14  
 #define PSY_ULTRA_VIOLET  0x6A0DAD  
-#define COLOR5      0xFFD700  
+#define PSY_SUNBURST      0xFFD700  
 #define PSY_CANDY_PURPLE  0xE754E1  
-#define COLOR11    0xFFB5E8  
-#define COLOR4    0xA0FFE6
+#define PSY_SKY_COTTON    0xFFB5E8  
+#define PSY_MINT_BLISS    0xA0FFE6
   
 
 typedef struct	s_complex_nbr
