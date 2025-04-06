@@ -34,14 +34,6 @@ static void	julia_or_mandelbrot(t_complex_nbr *z, t_complex_nbr *c, t_fractal *f
 	}
 }
 
-static int interpolate_color(double t, int color1, int color2)
-{
-    int r = (int)((1 - t) * ((color1 >> 16) & 0xFF) + t * ((color2 >> 16) & 0xFF));
-    int g = (int)((1 - t) * ((color1 >> 8) & 0xFF) + t * ((color2 >> 8) & 0xFF));
-    int b = (int)((1 - t) * (color1 & 0xFF) + t * (color2 & 0xFF));
-    return (r << 16) | (g << 8) | b;
-}
-
 static void	handle_pixel(int x, int y, t_fractal *fractal)
 {
   int			index;
